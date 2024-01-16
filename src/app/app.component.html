@@ -1,4 +1,4 @@
-<div class="text-sm text-gray-900 h-screen w-screen flex items-center justify-center bg-gray-800">
+<div class="relative text-sm text-gray-900 h-screen w-screen flex items-center justify-center bg-gray-800">
   <div class="bg-white flex p-5 rounded-sm">
     <div class="flex justify-center items-center bg-green-400">
       <img class="w-96 h-96 bg-blue-400" alt="MISSING IMAGE" [src]="currPath" />
@@ -27,8 +27,7 @@
         (click)="submit()">Calculate</button>
     </div>
   </div>
+  <app-results *ngIf="!!rgbValues" class="absolute top-24 l-0 r-0" [results]="rgbValues"></app-results>
 </div>
-
-<app-results [results]="rgbValues" *ngIf="!!rgbValues"></app-results>
 
 <router-outlet></router-outlet>
