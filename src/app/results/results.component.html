@@ -1,0 +1,7 @@
+<div class="flex absolute top-0 mx-auto">
+  <div *ngFor="let result of results.result">
+    <div class="h-12 w-24" [style]="'background-color: rgb('+result[0]+','+result[1]+','+result[2]+');'">
+      <p class="pt-12 text-center text-white font-semibold">({{result[0]+','+result[1]+','+result[2]}})</p>
+    </div>
+  </div>
+</div>

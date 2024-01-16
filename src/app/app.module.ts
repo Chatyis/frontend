@@ -1,22 +1,27 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { InputComponent } from './input/input.component';
-import { RadioComponent } from './radio/radio.component';
+import { AppRoutingModule } from './app-routing.module';
+import { FormModule } from './form/form.module';
+import { RestApiService } from './rest-api/rest-api.service';
+import { ResultsComponent } from './results/results.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
-  declarations: [		
-    AppComponent,
-      InputComponent,
-      RadioComponent
+  declarations: [					
+    AppComponent
    ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
-    AppRoutingModule
+    CommonModule,
+    ResultsComponent,
+    FormModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [RestApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
