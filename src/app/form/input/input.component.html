@@ -1,6 +1,6 @@
 <label class="flex flex-col">
   <p>{{label}}</p>
-  <input class="w-72 p-1 rounded-sm focus-within:outline-none hover:appearance-none disabled:opacity-65"
-    [ngClass]="{'text-red-900 bg-red-300':isInvalid, 'bg-blue-100':!isInvalid }" [placeholder]="placeholder"
+  <input class="w-72 p-1 rounded-sm focus-within:outline-none hover:appearance-none disabled:opacity-50"
+    [ngClass]="{'text-red-900 bg-red-300':isInvalid, 'bg-blue-200':!isInvalid }" [placeholder]="placeholder"
     [type]="type" [formControl]="control">
 </label>

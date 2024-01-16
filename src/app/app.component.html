@@ -23,11 +23,13 @@
         <app-radio name="applyRag" [control]="form.controls.applyRag" label="No" [value]="false"></app-radio>
       </div>
       <app-input label="RAG threshold (1-32)" [control]="form.controls.ragThreshold"></app-input>
-      <button class="bg-blue-600 text-white p-1 mt-2 w-full font-semibold mx-4 hover:bg-blue-400 box-border"
+      <button [disabled]="form.controls.file.value.name==='Please upload file...'"
+        class="bg-blue-600 text-white p-1 mt-2 w-full font-semibold mx-4 hover:bg-blue-400 disabled:hover:bg-blue-600 disabled:opacity-55 box-border"
         (click)="submit()">Calculate</button>
     </div>
   </div>
-  <app-results *ngIf="!!rgbValues" class="absolute top-24 l-0 r-0" [results]="rgbValues"></app-results>
+  <app-results *ngIf="!!rgbValues || error || isResponseLoading" class="absolute top-24 l-0 r-0" [error]="error"
+    [isResponseLoading]="isResponseLoading" [results]="rgbValues"></app-results>
 </div>
 
 <router-outlet></router-outlet>

@@ -4,6 +4,7 @@ import { DominantColors } from '../models/rest-api.model';
 import { CommonModule } from '@angular/common';
 
 import { ArrToRgbValuePipe } from '../pipes/arrToRgbValue.pipe';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-results',
@@ -13,7 +14,9 @@ import { ArrToRgbValuePipe } from '../pipes/arrToRgbValue.pipe';
 })
 export class ResultsComponent {
   @Input() results: DominantColors;
-  
+  @Input() error: HttpErrorResponse;
+  @Input() isResponseLoading: boolean = false;
+
   constructor(private arrToRgbPipe: ArrToRgbValuePipe) { }
   
   protected copyToClipboard(result: Array<Number>): void{

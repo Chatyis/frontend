@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
-import { RestApiService } from './rest-api/rest-api.service';
 import { DominantColors } from './models/rest-api.model';
+import { RestApiService } from './rest-api/rest-api.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -19,8 +20,10 @@ export class AppComponent {
     applyRag: [false],
     ragThreshold: ['16', [Validators.required, Validators.min(1), Validators.max(32)]]
   })
-  currPath: string | ArrayBuffer = '../assets/Red_eyed_tree_frog_edit2.jpg';
-  rgbValues: DominantColors;
+  protected currPath: string | ArrayBuffer = '../assets/Red_eyed_tree_frog_edit2.jpg';
+  protected rgbValues: DominantColors;
+  protected error: HttpErrorResponse;
+  protected isResponseLoading = false;
 
   constructor(private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
@@ -40,7 +43,6 @@ export class AppComponent {
     var reader = new FileReader();
     reader.readAsDataURL(file);
 		this.form.controls.file.setValue(file);
-    console.log(this.form.controls.file.value)
 
 		reader.onload = (_event) => {
       this.currPath = reader.result; 
@@ -50,17 +52,21 @@ export class AppComponent {
   
   protected submit(): void {
     const formData = new FormData()
-
+    this.isResponseLoading = true;
     Object.keys(this.form.controls).forEach(key => {
       const control = this.form.get(key);
 
       formData.append(key, control.value);
     });
 
-    this.restApiService.sendFormData(formData).subscribe(res => {
-      this.rgbValues = res;
-      this.rgbValues.result = res.result.map(result => result.trim().split(',').filter(rgbValue => rgbValue !== ''));
-      this.rgbValues.result = this.rgbValues.result.map(rgbArr => rgbArr.map(rgbElement => +rgbElement));
+    this.restApiService.sendFormData(formData).subscribe({
+      next: res => {
+        this.error = undefined;
+        this.rgbValues = res;
+      },
+      error: err => this.error = err
+    }).add(() => {
+      this.isResponseLoading = false;
       this.cdr.markForCheck();
     });
   }
