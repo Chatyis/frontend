@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { DominantColors } from './models/rest-api.model';
-import { RestApiService } from './rest-api/rest-api.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { RestApiService } from './rest-api/rest-api.service';
 
 @Component({
   selector: 'app-root',
@@ -13,13 +13,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class AppComponent {
   protected form = this.fb.group({
-    file: [ {value: {name: 'Please upload file...'}, disabled:true} ],
+    file: [{ value: { name: 'Please upload file...' }, disabled: true }],
     areCustomParametersApplied: [false],
     clusterAmount: ['32', [Validators.required, Validators.min(1), Validators.max(100)]],
     maximumFileSize: ['250', [Validators.required, Validators.min(1), Validators.max(1000)]],
     applyRag: [false],
     ragThreshold: ['16', [Validators.required, Validators.min(1), Validators.max(32)]]
-  })
+  });
   protected currPath: string | ArrayBuffer = '../assets/Red_eyed_tree_frog_edit2.jpg';
   protected rgbValues: DominantColors;
   protected error: HttpErrorResponse;
@@ -29,9 +29,11 @@ export class AppComponent {
     private cdr: ChangeDetectorRef,
     private restApiService: RestApiService) {
     this.toggleParameters(false);
+    
     this.form.controls.areCustomParametersApplied.valueChanges.subscribe(changes => {
       this.toggleParameters(changes);
     });
+
     this.form.controls.applyRag.valueChanges.subscribe(changes => {
       this.toggleRag(changes);
     })
@@ -71,7 +73,7 @@ export class AppComponent {
     });
   }
 
-  private toggleParameters(shouldEnable): void {
+  private toggleParameters(shouldEnable: boolean): void {
     if (shouldEnable) {
       this.form.controls.clusterAmount.enable();
       this.form.controls.maximumFileSize.enable();
@@ -89,7 +91,7 @@ export class AppComponent {
     this.cdr.markForCheck();
   }
 
-  private toggleRag(shouldEnable): void {
+  private toggleRag(shouldEnable: boolean): void {
     shouldEnable ? this.form.controls.ragThreshold.enable() : this.form.controls.ragThreshold.disable();
   }
 }

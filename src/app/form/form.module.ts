@@ -12,14 +12,14 @@ import { RadioComponent } from './radio/radio.component';
     ReactiveFormsModule
   ],
   declarations: [
-    RadioComponent,
+    ImageInputComponent,
     InputComponent,
-    ImageInputComponent
+    RadioComponent,
   ],
   exports: [
-    RadioComponent,
+    ImageInputComponent,
     InputComponent,
-    ImageInputComponent
+    RadioComponent,
   ]
 })
 export class FormModule { }
